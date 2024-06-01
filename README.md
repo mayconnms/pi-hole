@@ -9,7 +9,7 @@
 
 - Mudar a senha
 ```
-passwd
+passwd orangepi
 ```
 
 - Configurar a rede
@@ -34,22 +34,28 @@ echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+**3. Atualizar a lista de pacotes:**
+```
 sudo apt-get update
 ```
 
-**3. Instalar os pacotes do Docker**
+**4. Instalar os pacotes do Docker**
 ```
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-compose
 ```
 
+**5. Abilitar o Docker subir na inicialização**
+```
+sudo systemctl enable docker
+```
+
 # Desabilitar o Dns local para liberar o porta 53
 ```
-sudo systemctl disable systemd-resolved.service
-sudo systemctl stop systemd-resolved
 systemctl status dnsmasq
 sudo systemctl disable dnsmasq.service
 sudo systemctl stop dnsmasq
-
 ```
 
 # Instalação do Pi Hole
@@ -57,7 +63,7 @@ sudo systemctl stop dnsmasq
 
 - Copiar o arquivo do Docker-compose para o OrangePi via scp
 ```
-scp ./docker-compose.yaml orangepi@192.168.0.2:/home/orangepi/
+scp docker-compose.yaml orangepi@192.168.0.2:/home/orangepi/docker-compose.yaml
 ```
 
 - Conectar no OrangePi via ssh
