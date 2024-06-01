@@ -1,0 +1,15 @@
+services:
+  pihole:
+    container_name: pihole
+    image: pihole/pihole:2024.05.0
+    ports:
+      - "80:80/tcp"
+      - "53:53/tcp"
+      - "53:53/udp"
+    environment:
+      TZ: 'America/Sao_Paulo'
+      WEBPASSWORD: '<<Senha do admin do Pi Hole>>'
+    volumes:
+      - './etc-pihole:/etc/pihole'
+      - './etc-dnsmasq.d:/etc/dnsmasq.d'
+    restart: always
